@@ -3,6 +3,11 @@
 Following provides instructions on how to setup virtual machines for the PISCES simulation environment along with
 some example P4 programs.
 
+## MMfSDT Modifications
+The Vagrant box was last modified over a year ago at the time of writing and versions of VirtualBox, Guest Additions, and Vagrant conflict with the preconfiguration in this repository.
+The major modification was for the Vagrantfile, where the provisioning command was updated for shell scripts as written [here](https://www.vagrantup.com/intro/getting-started/provisioning.html).
+In addition, steps can be 
+
 ### Setup Virtual Machines (VMs)
 
 There are three virtual machines: Switch, Generator, and Receiver. The Generator

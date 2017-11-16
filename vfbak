@@ -2,18 +2,22 @@
 # vi: set ft=ruby :
 
 $script = <<SCRIPT
-    # echo wan
-    # sudo apt-get -y update
-    # echo two
-    # sudo apt-get -y upgrade
-    # echo three
-    # sudo apt-get -y install git python-pip fuse libfuse-dev dh-autoreconf openssl libssl-dev cmake libpcap-dev python-yaml
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get -y install git python-pip fuse libfuse-dev dh-autoreconf openssl libssl-dev cmake libpcap-dev python-yaml
 SCRIPT
 
-$switch_script = "setup-switch.sh"
-# $moongen_script = "setup-moongen.sh"
+$switch_script = <<SWITCH_SCRIPT
+    "/vagrant/setup-switch.sh"
+SWITCH_SCRIPT
 
-$pktgen_script = "setup-pktgen.sh"
+# $moongen_script = <<MOONGEN_SCRIPT
+#     "/vagrant/setup-moongen.sh"
+# MOONGEN_SCRIPT
+
+$pktgen_script = <<PKTGEN_SCRIPT
+    "/vagrant/setup-pktgen.sh"
+PKTGEN_SCRIPT
 
 Vagrant.configure("2") do |config|
 
@@ -35,8 +39,7 @@ Vagrant.configure("2") do |config|
         end
 
         # Setup switch
-        # switch.vm.provision "shell", inline: $switch_script
-        switch.vm.provision :shell, path: $switch_script
+        switch.vm.provision "shell", inline: $switch_script
     end
 
     # Configure generator
@@ -56,8 +59,7 @@ Vagrant.configure("2") do |config|
         end
 
         # Setup generator
-        # generator.vm.provision "shell", inline: $pktgen_script
-        generator.vm.provision :shell, path: $pktgen_script
+        generator.vm.provision "shell", inline: $pktgen_script
     end
 
     # Configure receiver
@@ -77,8 +79,7 @@ Vagrant.configure("2") do |config|
         end
 
         # Setup receiver
-        #receiver.vm.provision "shell", inline: $pktgen_script
-        receiver.vm.provision :shell, path: $pktgen_script
+        receiver.vm.provision "shell", inline: $pktgen_script
     end
 
     # Install essentials
